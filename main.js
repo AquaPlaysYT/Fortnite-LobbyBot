@@ -10,6 +10,7 @@ var readlineSync = require('readline-sync');
 const path = require('path');
 var client = new Client();
 var fs = require('fs');
+var config = require('./config.json');
 
 //* Main Pogram *\\ 
 
@@ -83,6 +84,8 @@ function StartClient() {
       }
   }
 
+  
+
   eg.init().then(async (success) => {
 
       // Login system reworked by Kysune
@@ -95,6 +98,21 @@ function StartClient() {
       await clientLoginAdapter.close();
 
       await eg.login(null, exchangeCode); 
+
+      if(config.UseDiscord == true)
+      {
+        client.on('ready', () => {
+
+            console.log(`Logged in as ${client.user.tag}!`);
+            const account = eg.getProfile(eg.account.id);
+            client.user.setActivity(`Fortnite Custom Lobbies`);
+            
+        });
+
+        client.login(config.DiscordBotToken);
+        
+
+      }
 
       var current_party;
 
@@ -119,10 +137,25 @@ function StartClient() {
 
           fortnite.party.me.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + EID + "." + EID);
 
-          fortnite.party.me.setBattlePass(true, 100, 999, 999);
+          fortnite.party.me.setBattlePass(true, 420000, 420000, 420000);
 
-          fortnite.party.me.setBanner(100, "otherbanner28", "default");
+          fortnite.party.me.setBanner(420000, "otherbanner28", "default");
+
+          if(config.UseDiscord == true)
+          {
+             client.user.setActivity(`Serving ${fortnite.party.members.length} Players!`);
+          }
       });
+
+      fortnite.communicator.on('party:member:left', async (member) => {
+        console.log(`Member#${member.id} left!`);
+        console.log(`Members count: ${fortnite.party.members.length}`);
+
+        if(config.UseDiscord == true)
+        {
+           client.user.setActivity(`Serving ${fortnite.party.members.length} Players!`);
+        }
+    });
 
       fortnite.communicator.on('party:invitation', async (invitation) => {
           current_party = invitation.party;
