@@ -9,7 +9,6 @@ const request = require("request-promise");
 var readlineSync = require('readline-sync');
 const path = require('path');
 var client = new Client();
-const config = require('./config.json');
 var fs = require('fs');
 
 //* Main Pogram *\\ 
@@ -22,7 +21,6 @@ console.log("A tutorial can be found on Youtube! ")
 console.log("https://youtube.com/c/aquaplaysyt")
 console.log("----------------------------------------------------------------- \n")
 
-var LogCheck = config.IsLogged;
 var ExchangeCode;
 
 // Manual Exchange Code Login Via Kysunes Login Script!
@@ -53,7 +51,6 @@ function StartClient() {
   const { EPlatform } = require('epicgames-client');
   const { EInputType } = require('epicgames-client');
   const { EPartyPrivacy } = require('epicgames-client');
-  const config = require("./config.json");
 
   var rNetCL = request('https://fnserver.terax235.com/api/v1.2/build',{ json: true }, (err, res, body) => {
     rNetCL = body.fortnite.netCL 
@@ -133,15 +130,9 @@ function StartClient() {
       });
 
       fortnite.communicator.on('friend:request', async (friendops) => {
-          if (config.friendaccept == "true") {
-              eg.communicator.sendMessage(friendops.friend.id, "Thanks for friending me! I'm a lobby bot, to use me invite or join my party then send me the CID or EID in private messages!");
-              sleep(200);
-              eg.acceptFriendRequest(friendops.friend.id)
-          } else {
-              eg.communicator.sendMessage(friendops.friend.id, "Sorry, this bot is currently set to not accept friend requests.");
-              sleep(200);
-              eg.declineFriendRequest(friendops.friend.id)
-          }
+          eg.communicator.sendMessage(friendops.friend.id, "Thanks for friending me! I'm a lobby bot, to use me invite or join my party then send me the CID or EID in private messages!");
+          sleep(200);
+          eg.acceptFriendRequest(friendops.friend.id)
       });
 
       eg.communicator.on('friend:message', async (data) => {
