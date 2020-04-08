@@ -218,7 +218,7 @@ function StartClient() {
           if (args[0].toLowerCase() == "!status") {
               var mess = data.message.replace("!status", "");
               fortnite.communicator.updateStatus(mess);
-              communicator.sendMessage(data.friend.id, 'Status set to ' + mess + "!");
+              eg.communicator.sendMessage(data.friend.id, 'Status set to ' + mess + "!");
           }
 
           if (args[0].toLowerCase() == "!banner") {
@@ -285,6 +285,8 @@ function StartClient() {
           }
 
       });
+
+      // This changes the default status, i would prefer you keep it the same but you change it if you feel!
 
       fortnite.communicator.updateStatus("FN Lobby Bot, Tutorial on 'youtube.com/aquaplaysyt'");
   });
