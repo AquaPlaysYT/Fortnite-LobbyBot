@@ -120,8 +120,8 @@ function StartClient() {
           throw new Error('Cannot initialize EpicGames launcher.');
 
       const fortnite = await eg.runGame(Fortnite, {
-          netCL: '12782126',
-          partyBuildId: '1:1:12782126',
+          netCL: '11567008',
+          partyBuildId: '1:1:11567008',
       });
       const br = await fortnite.runSubGame(ESubGame.BattleRoyale)
 
